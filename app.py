@@ -28,6 +28,42 @@ def contact():
 def review_interface():
 	return render_template('reviewinterface.html')
 
+@app.route('/appconcept')
+def app_concept():
+	return render_template('appconcept.html')
+
+@app.route('/allafamiglia')
+def alla_famiglia():
+	return render_template('Alla_Famiglia.html')
+
+@app.route('/goldenbuddha')
+def golden_buddha():
+	return render_template('Golden_Buddha.html')
+
+@app.route('/pizzaparma')
+def pizza_parma():
+	return render_template('Pizza_Parma.html')
+
+@app.route('/maxsalleghenytavern')
+def maxs_allegheny_tavern():
+	return render_template('Maxs_Allegheny_Tavern.html')
+
+@app.route('/tasteofindia')
+def taste_of_india():
+	return render_template('Taste_of_India.html')
+
+@app.route('/originaloysterhouse')
+def original_oyster_house():
+	return render_template('Original_Oyster_House.html')
+
+@app.route('/pagedairymart')
+def page_dairy_mart():
+	return render_template('Page_Dairy_Mart.html')
+
+@app.route('/phominh')
+def pho_minh():
+	return render_template('Pho_Minh.html')
+
 @app.route('/handlereview', methods=['POST'])
 def my_form_post():
 	classifier_obj = pickle.load( open( "save.p", "rb" ) )
