@@ -34,11 +34,10 @@ def my_form_post():
 	print(classifier_obj)
 	review_text = request.form['review_text']
 	print(review_text)
-	sample_entry = classifier.Entry(review_text, -1, classifier.process_sentiment_score)
+	sample_entry = classifier.Entry(review_text, -1, classifier.process_sentiment_score, None, None)
 	print(sample_entry)
 
 	guess = classifier_obj.classify(sample_entry.get_tuple()[0])
-	print("GUESS: " + str(guess))
 
 	if guess > 5:
 	    guess = 5
@@ -51,7 +50,8 @@ def my_form_post():
 
 @app.route('/upload')
 def upload():
-   return render_template('upload.html')
+
+   return render_template('upload.html', guess_data=None, actual_data=None)
 
 @app.route('/uploader', methods=['GET', 'POST'])
 def upload_file():
@@ -59,8 +59,12 @@ def upload_file():
       f = request.files['file']
       f.save(secure_filename(f.filename))
       classifier_obj = classifier.main(f.filename)
+      guess_counts = classifier_obj[1]
+      actual_counts = classifier_obj[2]
       print('file uploaded successfully')
-      return redirect(url_for('upload'))
+      guess_data_arr = [guess_counts["1Star"], guess_counts["2Star"], guess_counts["3Star"], guess_counts["4Star"], guess_counts["5Star"]]
+      actual_data_arr = [actual_counts["1Star"], actual_counts["2Star"], actual_counts["3Star"], actual_counts["4Star"], actual_counts["5Star"]]
+      return render_template('upload.html', guess_data=guess_data_arr, actual_data=actual_data_arr)
       
 if __name__ == "__main__":
     app.run(debug=True)

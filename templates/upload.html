@@ -93,10 +93,104 @@
 	</section>
 	<br>
 
+    <section id="features">
+        <div class="container">
+    {% if guess_data is not none and actual_data is not none %}
+        {{guess_data}}
+        {{actual_data}}
+        <canvas id="canvas"></canvas>
+    {% endif %}
+    </div>
+        </secton>
+    <script>
+      var barChartData = {
+            labels: ["1", "2", "3", "4", "5"],
+            datasets: [{
+                type: 'bar',
+                  label: "Visitor",
+                    data: {{guess_data}},
+                    fill: false,
+                    backgroundColor: '#71B37C',
+                    borderColor: '#71B37C',
+                    hoverBackgroundColor: '#71B37C',
+                    hoverBorderColor: '#71B37C',
+                    yAxisID: 'y-axis-1'
+            }, {
+                label: "Sales",
+                    type: 'bar',
+                  label: "Visitor",
+                    data: {{actual_data}},
+                    fill: false,
+                    backgroundColor: 'blue',
+                    borderColor: '#71B37C',
+                    hoverBackgroundColor: '#71B37C',
+                    hoverBorderColor: '#71B37C',
+                    yAxisID: 'y-axis-1'
+            } ]
+        };
+        
+        window.onload = function() {
+            var ctx = document.getElementById("canvas").getContext("2d");
+            window.myBar = new Chart(ctx, {
+                type: 'bar',
+                data: barChartData,
+                options: {
+                responsive: true,
+                tooltips: {
+                  mode: 'label'
+              },
+              elements: {
+                line: {
+                    fill: false
+                }
+            },
+              scales: {
+                xAxes: [{
+                    display: true,
+                    gridLines: {
+                        display: false
+                    },
+                    labels: {
+                        show: true,
+                    }
+                }],
+                yAxes: [{
+                    type: "linear",
+                    display: true,
+                    position: "left",
+                    id: "y-axis-1",
+                    gridLines:{
+                        display: false
+                    },
+                    labels: {
+                        show:true,
+                        
+                    }
+                }, {
+                    type: "linear",
+                    display: true,
+                    position: "right",
+                    id: "y-axis-2",
+                    gridLines:{
+                        display: false
+                    },
+                    labels: {
+                        show:true,
+                        
+                    }
+                }]
+            }
+            }
+            });
+        };
+
+    </script>
+
     <script type="text/javascript" src="/static/js/jquery.js"></script>
     <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/static/js/lightbox.min.js"></script>
     <script type="text/javascript" src="/static/js/wow.min.js"></script>
-    <script type="text/javascript" src="/static/js/main.js"></script>   
+    <script type="text/javascript" src="/static/js/main.js"></script>
+    <script src="static/js/Chart.js"></script>   
 </body>
 </html>

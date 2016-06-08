@@ -1,8 +1,9 @@
 import string
-import simplejson as json
+import json
 import nltk
 import re
 import os
+import pandas as pd
 from pprint import pprint
 from random import shuffle
 from nltk.corpus import stopwords
@@ -20,10 +21,12 @@ from math import sqrt
 import pickle
 
 class Entry:
-    def __init__(self, text, rating, process_func):
+    def __init__(self, text, rating, process_func, business_id, user_id):
         self.text = text
         self.rating = rating
         self.bag_of_words = process_func(text)
+        self.business_id = business_id
+        self.user_id = user_id
 
     def get_tuple(self):
         return (self.bag_of_words, self.rating)
@@ -128,7 +131,7 @@ def get_entries(json_arr, process_function):
             continue
         # entry = Entry(json_data["text"], json_data["stars"], process_bigram)
         print("Before Entry Creation")
-        entry = Entry(json_data["text"], json_data["stars"], process_function)
+        entry = Entry(json_data["text"], json_data["stars"], process_function, json_data["business_id"], json_data["user_id"])
         entries.append(entry) # return entries for that particular process function
         print("After Entry Creation " + str(counter))
         counter += 1
@@ -145,6 +148,23 @@ def get_review_rating(trained_classifier, review_text):
 def main(json_file):
     y_true = []
     y_pred = []
+    review_text = []
+    business_ids = []
+    user_ids = []
+    ratings_count_guesses = {
+        "1Star" : 0,
+        "2Star" : 0,
+        "3Star" : 0,
+        "4Star" : 0,
+        "5Star" : 0
+    }
+    ratings_count_actual = {
+        "1Star" : 0,
+        "2Star" : 0,
+        "3Star" : 0,
+        "4Star" : 0,
+        "5Star" : 0
+    }
     data_file = open(json_file)
     # process_functions = [process_bigram, process_unigram, process_sentiment_score, process_word_count, \
                          # process_capital_word_count, process_exclamation_points]
@@ -152,7 +172,7 @@ def main(json_file):
     #nltk.classify.DecisionTreeClassifier, 
     #nltk.classify.NaiveBayesClassifier,
     #SklearnClassifier(BernoulliNB())
-    process_functions = [process_bigram] #test
+    process_functions = [process_sentiment_score] #test
     classifiers = [nltk.classify.NaiveBayesClassifier]
     entries_lists = []
     
@@ -180,13 +200,14 @@ def main(json_file):
             test = entries_list[int(length * 0.7):]
             print()
             print("About to train")
-            trained_classifier = train(training, classifier) # make these into methods to get different components for app
+            # trained_classifier = train(training, classifier) # make these into methods to get different components for app
             # conf_matrix = confusion_matrix.create_confusion_matrix(test, trained_classifier)
 
             # print("Resulto: " + str(statistics.get_kappa(conf_matrix)))
             # print(classifier)
             # we are measuring accuracy for each classifier/feature set combination
 
+            trained_classifier =  pickle.load( open( "save.p", "rb" ) )
             classifier_to_return = trained_classifier
 
             accuracy = 0
@@ -195,6 +216,8 @@ def main(json_file):
             for entry in test:
                 guess = trained_classifier.classify(entry.get_tuple()[0])
 
+                print("Guess: " + str(guess))
+
                 if guess > 5:
                     guess = 5
                 elif guess < 1:
@@ -202,8 +225,35 @@ def main(json_file):
                 else:
                     guess = round(guess)
 
+                if guess == 1:
+                    ratings_count_guesses["1Star"] += 1
+                elif guess == 2:
+                    ratings_count_guesses["2Star"] += 1
+                elif guess == 3:
+                    ratings_count_guesses["3Star"] += 1
+                elif guess == 4:
+                    ratings_count_guesses["4Star"] += 1
+                elif guess == 5:
+                    ratings_count_guesses["5Star"] += 1
+
+                if entry.rating == 1:
+                    ratings_count_actual["1Star"] += 1
+                elif entry.rating == 2:
+                    ratings_count_actual["2Star"] += 1
+                elif entry.rating == 3:
+                    ratings_count_actual["3Star"] += 1
+                elif entry.rating == 4:
+                    ratings_count_actual["4Star"] += 1
+                elif entry.rating == 5:
+                    ratings_count_actual["5Star"] += 1
+
+                review_text.append(entry.text)
                 y_pred.append(guess)
                 y_true.append(entry.rating)
+                business_ids.append(entry.business_id)
+                user_ids.append(entry.user_id)
+                print(entry.user_id)
+                print(entry.business_id)
                 # if rating_difference(guess, entry.rating):
                 accuracy += (abs(entry.rating - guess))
 
@@ -214,20 +264,24 @@ def main(json_file):
 
                 total_classify_count += 1
 
+            d = {'Review Text': review_text, 'Guess Rating': y_pred, 'Actual Rating': y_true, "Business Id": business_ids, "User Id": user_ids}
+            df = pd.DataFrame(data=d)
+            pickle.dump( df, open( "reviewDataFrame.p", "wb" ) )
+            df_obj = pickle.load( open( "reviewDataFrame.p", "rb" ) )
+
             print()
             print("Feature Set: Sentiment Analysis")
             print(classifier)
-            # print(str((accuracy / total_classify_count) * 100) + "%")
             print()
         
         print("Mean Squared Error: " + str(mean_squared_error(y_true, y_pred)))
         print("Mean Error: " + str(accuracy / total_classify_count))
         print("classifier to return")
         print(classifier_to_return)
-        return classifier_to_return
+        return (classifier_to_return, ratings_count_guesses, ratings_count_actual)
 
 if __name__ == "__main__":
-    direct = "/Users/shubham.kahal/Downloads/"
-    fpath = os.path.join(direct, "yelp_academic_dataset_review.json")
-    print(fpath)
-    pickle.dump( main(fpath), open( "saveNaiveBayes.p", "wb" ) )
+    # direct = "/Users/shubham.kahal/Downloads/"
+    # fpath = os.path.join(direct, "yelp_academic_dataset_review.json")
+    # print(fpath)
+    pickle.dump( main("yelptest.json")[0], open( "saveNaiveBayes.p", "wb" ) )
