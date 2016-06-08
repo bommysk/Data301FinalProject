@@ -103,7 +103,7 @@
     <section id="services">
         <div class="container">
             <div class="row">
-                <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">
+                <div class="col-sm-6 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">
                     <div class="single-service">
                         <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
                             <img src="/static/images/home/icon1.png" alt="">
@@ -112,16 +112,8 @@
                         <p>Ground round tenderloin flank shank ribeye. Hamkevin meatball swine. Cow shankle beef sirloin chicken ground round.</p>
                     </div>
                 </div>
-                <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
-                    <div class="single-service">
-                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="600ms">
-                            <img src="/static/images/home/icon2.png" alt="">
-                        </div>
-                        <h2>Superior Typography</h2>
-                        <p>Hamburger ribeye drumstick turkey, strip steak sausage ground round shank pastrami beef brisket pancetta venison.</p>
-                    </div>
-                </div>
-                <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="900ms">
+            
+                <div class="col-sm-6 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="900ms">
                     <div class="single-service">
                         <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="900ms">
                             <img src="/static/images/home/icon3.png" alt="">
@@ -187,7 +179,7 @@
                         <P>Train and measure accuracy of the classifier on your own dataset.</P>
                     </div>
                 </div>
-
+                
                 <div class="single-features">
                     <div class="col-sm-5 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
                         <img src="/static/images/home/image2.png" class="img-responsive" alt="">
@@ -201,6 +193,7 @@
                         <P>Generate a Sentiment Analysis word cloud visual.</P>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -223,25 +216,5 @@
     <script type="text/javascript" src="/static/js/lightbox.min.js"></script>
     <script type="text/javascript" src="/static/js/wow.min.js"></script>
     <script type="text/javascript" src="/static/js/main.js"></script>   
-
-    <script>
-        $(function() {
-            $('input[type="submit"]').click(function() {
-                var review_text =  $(form).find("textarea").val();
-                console.log(review_text);
-                $.ajax({
-                    url: '/',
-                    data: $('form').serialize(),
-                    type: 'POST',
-                    success: function(response) {
-                        console.log(response);
-                    },
-                    error: function(error) {
-                        console.log(error);
-                    }
-                });
-            });
-        });
-    </script>
 </body>
 </html>

@@ -4,6 +4,7 @@ import classifer as classifier
 import math
 import pickle
 import time
+import bokeh_example as bokeh
 
 app = Flask(__name__)
 
@@ -64,7 +65,8 @@ def upload_file():
       print('file uploaded successfully')
       guess_data_arr = [guess_counts["1Star"], guess_counts["2Star"], guess_counts["3Star"], guess_counts["4Star"], guess_counts["5Star"]]
       actual_data_arr = [actual_counts["1Star"], actual_counts["2Star"], actual_counts["3Star"], actual_counts["4Star"], actual_counts["5Star"]]
-      return render_template('upload.html', guess_data=guess_data_arr, actual_data=actual_data_arr)
+      bokeh_result = bokeh.func()
+      return render_template('upload.html', guess_data=guess_data_arr, actual_data=actual_data_arr, bokeh_div = bokeh_result[1]['Blue'], bokeh_script=bokeh_result[0])
       
 if __name__ == "__main__":
     app.run(debug=True)

@@ -704,7 +704,7 @@ ul.sub-menu {
 
 .single-features {
   overflow: hidden;
-  padding-top: 65px;
+  padding-top: 0px;
   padding-bottom: 40px;
 }
 
@@ -717,12 +717,12 @@ ul.sub-menu {
   padding-top: 0;
 }
 
-.single-features:nth-child(2){
-  padding-top: 0;
-}
-
 .single-features h2{
   margin-bottom: 15px;
+}
+
+.single-features:nth-child(1){
+  padding-top: 40px;
 }
 
 #clients{
