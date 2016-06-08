@@ -146,13 +146,13 @@ def main(json_file):
     y_true = []
     y_pred = []
     data_file = open(json_file)
-    # process_functions = [process_bigram, prcess_unigram, process_sentiment_score, process_word_count, \
+    # process_functions = [process_bigram, process_unigram, process_sentiment_score, process_word_count, \
                          # process_capital_word_count, process_exclamation_points]
 
     #nltk.classify.DecisionTreeClassifier, 
     #nltk.classify.NaiveBayesClassifier,
     #SklearnClassifier(BernoulliNB())
-    process_functions = [process_sentiment_score] #test
+    process_functions = [process_bigram] #test
     classifiers = [nltk.classify.NaiveBayesClassifier]
     entries_lists = []
     

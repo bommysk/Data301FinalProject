@@ -40,7 +40,6 @@ def my_form_post():
 	guess = classifier_obj.classify(sample_entry.get_tuple()[0])
 	print("GUESS: " + str(guess))
 
-
 	if guess > 5:
 	    guess = 5
 	elif guess < 1:
@@ -60,8 +59,8 @@ def upload_file():
       f = request.files['file']
       f.save(secure_filename(f.filename))
       classifier_obj = classifier.main(f.filename)
-      flash('file uploaded successfully')
-      return redirect(url_for('index'))
-
+      print('file uploaded successfully')
+      return redirect(url_for('upload'))
+      
 if __name__ == "__main__":
     app.run(debug=True)
