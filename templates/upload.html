@@ -106,7 +106,7 @@
             labels: ["1", "2", "3", "4", "5"],
             datasets: [{
                 type: 'bar',
-                  label: "Guessed Review",
+                  label: "Guessed Review Count",
                     data: {{guess_data}},
                     fill: false,
                     backgroundColor: '#c41200',
@@ -116,7 +116,7 @@
                     yAxisID: 'y-axis-1'
             }, {
                     type: 'bar',
-                    label: "Actual Review",
+                    label: "Actual Review Count",
                     data: {{actual_data}},
                     fill: false,
                     backgroundColor: '#3b65a7',
@@ -134,19 +134,19 @@
                 data: barChartData,
                 options: {
                     title: {
-            display: true,
-            text: 'Custom Chart Title'
-        },
-                responsive: true,
-                tooltips: {
-                  mode: 'label'
-              },
-              elements: {
-                line: {
-                    fill: false
-                }
-            },
-              scales: {
+                    display: true,
+                    text: 'Rating Count'
+                },
+                    responsive: true,
+                    tooltips: {
+                      mode: 'label'
+                  },
+                  elements: {
+                    line: {
+                        fill: false
+                    }
+                },
+                scales: {
                 xAxes: [{
                     display: true,
                     gridLines: {
@@ -170,7 +170,7 @@
                         
                     }
                 }]
-            }
+              }
             }
             });
         };
