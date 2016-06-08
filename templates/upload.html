@@ -96,9 +96,8 @@
     <section id="features">
         <div class="container">
     {% if guess_data is not none and actual_data is not none %}
-        {{guess_data}}
-        {{actual_data}}
-        <canvas id="canvas"></canvas>
+
+            <canvas id="canvas"></canvas>
     {% endif %}
     </div>
         </secton>
@@ -107,24 +106,23 @@
             labels: ["1", "2", "3", "4", "5"],
             datasets: [{
                 type: 'bar',
-                  label: "Visitor",
+                  label: "Guessed Review",
                     data: {{guess_data}},
                     fill: false,
-                    backgroundColor: '#71B37C',
-                    borderColor: '#71B37C',
-                    hoverBackgroundColor: '#71B37C',
-                    hoverBorderColor: '#71B37C',
+                    backgroundColor: '#c41200',
+                    borderColor: '#c41200',
+                    hoverBackgroundColor: '#c41200',
+                    hoverBorderColor: '#c41200',
                     yAxisID: 'y-axis-1'
             }, {
-                label: "Sales",
                     type: 'bar',
-                  label: "Visitor",
+                    label: "Actual Review",
                     data: {{actual_data}},
                     fill: false,
-                    backgroundColor: 'blue',
-                    borderColor: '#71B37C',
-                    hoverBackgroundColor: '#71B37C',
-                    hoverBorderColor: '#71B37C',
+                    backgroundColor: '#3b65a7',
+                    borderColor: '#3b65a7',
+                    hoverBackgroundColor: '#3b65a7',
+                    hoverBorderColor: '#3b65a7',
                     yAxisID: 'y-axis-1'
             } ]
         };
@@ -135,6 +133,10 @@
                 type: 'bar',
                 data: barChartData,
                 options: {
+                    title: {
+            display: true,
+            text: 'Custom Chart Title'
+        },
                 responsive: true,
                 tooltips: {
                   mode: 'label'
@@ -151,6 +153,7 @@
                         display: false
                     },
                     labels: {
+                        text: "Star Ratings",
                         show: true,
                     }
                 }],
@@ -159,18 +162,6 @@
                     display: true,
                     position: "left",
                     id: "y-axis-1",
-                    gridLines:{
-                        display: false
-                    },
-                    labels: {
-                        show:true,
-                        
-                    }
-                }, {
-                    type: "linear",
-                    display: true,
-                    position: "right",
-                    id: "y-axis-2",
                     gridLines:{
                         display: false
                     },
