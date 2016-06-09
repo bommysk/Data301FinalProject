@@ -28,9 +28,13 @@ def contact():
 def review_interface():
 	return render_template('reviewinterface.html')
 
-@app.route('/appconcept')
-def app_concept():
-	return render_template('appconcept.html')
+@app.route('/appconceptbusinesses')
+def app_concept_businesses():
+	return render_template('appconceptbusinesses.html')
+
+@app.route('/appconceptusers')
+def app_concept_users():
+	return render_template('appconceptusers.html')
 
 @app.route('/allafamiglia')
 def alla_famiglia():
@@ -63,6 +67,38 @@ def page_dairy_mart():
 @app.route('/phominh')
 def pho_minh():
 	return render_template('Pho_Minh.html')
+
+@app.route('/86lPnxq14I4n2STeK07FEw')
+def user1():
+	return render_template("86lPnxq14I4n2STeK07FEw.html")
+
+@app.route('/iTmWHtltCtk0Gm55AOxrUA')
+def user2():
+	return render_template("iTmWHtltCtk0Gm55AOxrUA.html")
+
+@app.route('/nEYPahVwXGD2Pjvgkm7QqQ')
+def user3():
+	return render_template("nEYPahVwXGD2Pjvgkm7QqQ.html")
+
+@app.route('/Q3fFv_ft17OyV-NRF1iQxw')
+def user4():
+	return render_template("Q3fFv_ft17OyV-NRF1iQxw.html")
+
+@app.route('/q7MrNVt1FE23rwtWmPYWHg')
+def user5():
+	return render_template("q7MrNVt1FE23rwtWmPYWHg.html")
+
+@app.route('/So32N7bSbUd1RwhFtI6jTQ')
+def user6():
+	return render_template("So32N7bSbUd1RwhFtI6jTQ.html")
+
+@app.route('/WzaaorVCmUTQvu4mScunNg')
+def user7():
+	return render_template("WzaaorVCmUTQvu4mScunNg.html")
+
+@app.route('/zk0SnIEa8ju2iK0mW8ccRQ')
+def user8():
+	return render_template("zk0SnIEa8ju2iK0mW8ccRQ.html")
 
 @app.route('/handlereview', methods=['POST'])
 def my_form_post():
