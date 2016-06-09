@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from werkzeug import secure_filename
 import classifer as classifier
+import multiclassifier as multiclassifier
 import math
 import pickle
 import time
-import bokeh_example as bokeh
 
 app = Flask(__name__)
 
@@ -137,8 +137,35 @@ def upload_file():
       print('file uploaded successfully')
       guess_data_arr = [guess_counts["1Star"], guess_counts["2Star"], guess_counts["3Star"], guess_counts["4Star"], guess_counts["5Star"]]
       actual_data_arr = [actual_counts["1Star"], actual_counts["2Star"], actual_counts["3Star"], actual_counts["4Star"], actual_counts["5Star"]]
-      bokeh_result = bokeh.func()
-      return render_template('upload.html', guess_data=guess_data_arr, actual_data=actual_data_arr, bokeh_div = bokeh_result[1]['Blue'], bokeh_script=bokeh_result[0])
+      return render_template('upload.html', guess_data=guess_data_arr, actual_data=actual_data_arr)
+
+@app.route('/classifiercomparison')
+def classifiercomparison():
+   return render_template('classifiercomparison.html', mse_arr=None, me_arr=None)
+
+@app.route('/classifiercomparitor', methods=['GET', 'POST'])
+def classifiercomparitor():
+   mse_arr = []
+   me_arr = []
+   labels = []
+
+   if request.method == 'POST':
+      f = request.files['file']
+      f.save(secure_filename(f.filename))
+      multi_classifier_obj = multiclassifier.main(f.filename)
+      len(multi_classifier_obj)
+      print('file uploaded successfully')
+      for obj in multi_classifier_obj:
+      	print("MSE")
+      	print(obj.mse)
+      	labels.append(obj.process_func_str)
+      	mse_arr.append(obj.mse)
+      	me_arr.append(obj.me)
+
+      	print (mse_arr[0:5])
       
+      print(labels)
+      return render_template('classifiercomparison.html', labels=labels, mse_arr_1=mse_arr[0:5], mse_arr_2=mse_arr[5:], me_arr_1=me_arr[0:5], me_arr_2=me_arr[5:])
+
 if __name__ == "__main__":
     app.run(debug=True)

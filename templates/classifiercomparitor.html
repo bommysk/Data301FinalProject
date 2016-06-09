@@ -22,8 +22,6 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/static/images/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/static/images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="/static/images/ico/apple-touch-icon-57-precomposed.png">
-    <link href="http://cdn.pydata.org/bokeh/release/bokeh-0.10.0.min.css" rel="stylesheet" type="text/css">
-
 </head><!--/head-->
 
 <body>
@@ -57,9 +55,9 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/aboutus">About</a></li>
-                        <li><a href="/contact">Contact</a></li>                                        
+                        <li><a href="index.html">Home</a></li>
+                        <li class="active"><a href="aboutus.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>                                        
                     </ul>
                 </div>
             </div>
@@ -81,110 +79,28 @@
         </div>
    </section>
    
-   	 <section id="features">
+	<form action = "http://localhost:5000/uploader" method = "POST" 
+		enctype = "multipart/form-data">
+		<input type = "file" name = "file" />
+		<input type = "submit"/>
+	</form>
+  
+    <footer id="footer">
         <div class="container">
             <div class="row">
-				<form action = "http://localhost:5000/uploader" method = "POST" 
-					enctype = "multipart/form-data">
-					<input type = "file" name = "file" />
-					<br>
-					<input class="btn-lg btn-primary" type = "submit"/>
-				</form>
-			</div>
-		</div>
-	</section>
-	<br>
-
-    <section id="features">
-        <div class="container">
-    {% if guess_data is not none and actual_data is not none %}
-            <canvas id="canvas"></canvas>
-    {% endif %}
-
-    </div>
-        </secton>
-    <script>
-      var barChartData = {
-            labels: ["1", "2", "3", "4", "5"],
-            datasets: [{
-                type: 'bar',
-                  label: "Guessed Review Count",
-                    data: {{guess_data}},
-                    fill: false,
-                    backgroundColor: '#c41200',
-                    borderColor: '#c41200',
-                    hoverBackgroundColor: '#c41200',
-                    hoverBorderColor: '#c41200',
-                    yAxisID: 'y-axis-1'
-            }, {
-                    type: 'bar',
-                    label: "Actual Review Count",
-                    data: {{actual_data}},
-                    fill: false,
-                    backgroundColor: '#3b65a7',
-                    borderColor: '#3b65a7',
-                    hoverBackgroundColor: '#3b65a7',
-                    hoverBorderColor: '#3b65a7',
-                    yAxisID: 'y-axis-1'
-            } ]
-        };
-        
-        window.onload = function() {
-            var ctx = document.getElementById("canvas").getContext("2d");
-            window.myBar = new Chart(ctx, {
-                type: 'bar',
-                data: barChartData,
-                options: {
-                    title: {
-                    display: true,
-                    text: 'Rating Count'
-                },
-                    responsive: true,
-                    tooltips: {
-                      mode: 'label'
-                  },
-                  elements: {
-                    line: {
-                        fill: false
-                    }
-                },
-                scales: {
-                xAxes: [{
-                    display: true,
-                    gridLines: {
-                        display: false
-                    },
-                    labels: {
-                        text: "Star Ratings",
-                        show: true,
-                    }
-                }],
-                yAxes: [{
-                    type: "linear",
-                    display: true,
-                    position: "left",
-                    id: "y-axis-1",
-                    gridLines:{
-                        display: false
-                    },
-                    labels: {
-                        show:true,
-                        
-                    }
-                }]
-              }
-            }
-            });
-        };
-
-    </script>
+                <div class="col-sm-12">
+                    <div class="copyright-text text-center">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--/#footer-->
 
     <script type="text/javascript" src="/static/js/jquery.js"></script>
     <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/static/js/lightbox.min.js"></script>
     <script type="text/javascript" src="/static/js/wow.min.js"></script>
-    <script type="text/javascript" src="/static/js/main.js"></script>
-    <script src="static/js/Chart.js"></script>
-
+    <script type="text/javascript" src="/static/js/main.js"></script>   
 </body>
 </html>

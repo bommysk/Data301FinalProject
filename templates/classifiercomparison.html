@@ -84,7 +84,7 @@
    	 <section id="features">
         <div class="container">
             <div class="row">
-				<form action = "http://localhost:5000/uploader" method = "POST" 
+				<form action = "http://localhost:5000/classifiercomparitor" method = "POST" 
 					enctype = "multipart/form-data">
 					<input type = "file" name = "file" />
 					<br>
@@ -97,19 +97,22 @@
 
     <section id="features">
         <div class="container">
-    {% if guess_data is not none and actual_data is not none %}
+    {% if mse_arr is not none and me_arr is not none %}
             <canvas id="canvas"></canvas>
+            <br>
+            <br>
+            <canvas id="canvas2"></canvas>
     {% endif %}
 
     </div>
         </secton>
     <script>
-      var barChartData = {
-            labels: ["1", "2", "3", "4", "5"],
+      var barChartDataMse = {
+            labels: ["process_bigram", "process_unigram", "process_word_count", "process_capital_word_count", "process_exclamation_points"],
             datasets: [{
                 type: 'bar',
-                  label: "Guessed Review Count",
-                    data: {{guess_data}},
+                  label: "Naive Bayes Classifier Mean Squared Error",
+                    data: {{mse_arr_1}},
                     fill: false,
                     backgroundColor: '#c41200',
                     borderColor: '#c41200',
@@ -118,8 +121,33 @@
                     yAxisID: 'y-axis-1'
             }, {
                     type: 'bar',
-                    label: "Actual Review Count",
-                    data: {{actual_data}},
+                    label: "K-Nearest Neighbors Mean Squared Error",
+                    data: {{mse_arr_2}},
+                    fill: false,
+                    backgroundColor: '#3b65a7',
+                    borderColor: '#3b65a7',
+                    hoverBackgroundColor: '#3b65a7',
+                    hoverBorderColor: '#3b65a7',
+                    yAxisID: 'y-axis-1'
+            } ]
+        };
+
+        var barChartDataMe = {
+            labels: ["process_bigram", "process_unigram", "process_word_count", "process_capital_word_count", "process_exclamation_points"],
+            datasets: [{
+                    type: 'bar',
+                    label: "Naive Bayes Classifier Mean Error",
+                    data: {{me_arr_1}},
+                    fill: false,
+                    backgroundColor: '#c41200',
+                    borderColor: '#c41200',
+                    hoverBackgroundColor: '#c41200',
+                    hoverBorderColor: '#c41200',
+                    yAxisID: 'y-axis-1'
+            }, {
+                    type: 'bar',
+                    label: "K-Nearest Neighbors Mean Error",
+                    data: {{me_arr_2}},
                     fill: false,
                     backgroundColor: '#3b65a7',
                     borderColor: '#3b65a7',
@@ -133,11 +161,57 @@
             var ctx = document.getElementById("canvas").getContext("2d");
             window.myBar = new Chart(ctx, {
                 type: 'bar',
-                data: barChartData,
+                data: barChartDataMse,
                 options: {
                     title: {
                     display: true,
-                    text: 'Rating Count'
+                    text: 'Mean Squared Error'
+                },
+                    responsive: true,
+                    tooltips: {
+                      mode: 'label'
+                  },
+                  elements: {
+                    line: {
+                        fill: false
+                    }
+                },
+                scales: {
+                xAxes: [{
+                    display: true,
+                    gridLines: {
+                        display: false
+                    },
+                    labels: {
+                        text: "Star Ratings",
+                        show: true,
+                    }
+                }],
+                yAxes: [{
+                    type: "linear",
+                    display: true,
+                    position: "left",
+                    id: "y-axis-1",
+                    gridLines:{
+                        display: false
+                    },
+                    labels: {
+                        show:true,
+                        
+                    }
+                }]
+              }
+            }
+            });
+
+            var ctx = document.getElementById("canvas2").getContext("2d");
+            window.myBar = new Chart(ctx, {
+                type: 'bar',
+                data: barChartDataMe,
+                options: {
+                    title: {
+                    display: true,
+                    text: 'Mean Error'
                 },
                     responsive: true,
                     tooltips: {

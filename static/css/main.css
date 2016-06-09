@@ -830,6 +830,15 @@ ul.sub-menu {
   margin-left: 77%;
 }
 
+.compare-classifier-button {
+  height: 100%;
+  background-repeat: no-repeat;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  margin-left: 57%;
+}
+
 .review-interface-button-left {
   height: 100%;
   background-repeat: no-repeat;
