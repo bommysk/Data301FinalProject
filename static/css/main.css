@@ -35,6 +35,27 @@
     color:#4fcccd;
   }
 
+  a.glyphFeature {
+    color:black;
+  }
+
+  a.glyphFeature:hover {
+    outline: none;
+    text-decoration:none;
+    color:#4fcccd;
+  }
+
+  a.glyphFeatureConcept {
+    color:black;
+    font-size:261px;
+  }
+
+  a.glyphFeatureConcept:hover {
+    outline: none;
+    text-decoration:none;
+    color:#4fcccd;
+  }
+
   a:focus {
     outline:none;
     outline-offset: 0;
